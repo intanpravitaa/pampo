@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.itera.intann.pamposql.LoginActivity">
+
+
+    <ImageView
+        android:id= "@+id/icon"
+        android:background= "@drawable/touchicon_180"
+        android:layout_width= "100dp"
+        android:layout_height= "100dp"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your email"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your password"
+                android:inputType="textPassword"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:background="#263238"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="LOG IN" />
+
+            <LinearLayout
+                android:id="@+id/login_layout_or"
+                android:layout_below="@+id/btnLogin"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:background="#c4c8c9"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:padding="5dp"
+                    android:text="OR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:background="#c4c8c9"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#263238"
+                android:textStyle="bold"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="REGISTER"/>
+
+
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:onClick="false"/>
+
+        </LinearLayout>
+
+</RelativeLayout>
