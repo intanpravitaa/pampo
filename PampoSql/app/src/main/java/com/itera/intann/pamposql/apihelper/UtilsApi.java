@@ -2,7 +2,7 @@ package com.itera.intann.pamposql.apihelper;
 
 public class UtilsApi {
     // 127.0.0.1 adalah localhost.
-    public static final String BASE_URL_API = "http://192.168.1.14/pampo/";
+    public static final String BASE_URL_API = "http://192.168.43.54/pampo/API/";
 
     // Mendeklarasikan Interface BaseApiService
     public static BaseApiService getAPIService(){

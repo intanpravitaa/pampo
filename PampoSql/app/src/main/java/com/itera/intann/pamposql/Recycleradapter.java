@@ -36,7 +36,7 @@ public class Recycleradapter extends RecyclerView.Adapter<Recycleradapter.MyHold
     public void onBindViewHolder(MyHolder holder, int position) {
         Review review = list.get(position);
         holder.name.setText(review.getJudul_review());
-        String image1 = review.getGambar_review();
+        String image1 = "http://192.168.43.54/Pampo/gambar_review/"+review.getGambar_review();
         imageLoader.displayImage(image1, holder.image);
     }
 
