@@ -31,6 +31,7 @@ public class Dashboard extends AppCompatActivity {
 
     RecyclerView recyclerView;
     List<Review> listing;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class Dashboard extends AppCompatActivity {
         ImageLoaderConfiguration config=new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
         listing = new ArrayList<>();
+        mContext = this;
 
         BaseApiService service = UtilsApi.getAPIService();
         Call<ListReview> call = service.getReview();
@@ -66,7 +68,7 @@ public class Dashboard extends AppCompatActivity {
 
 
                         }
-                        Recycleradapter recyclerAdapter = new Recycleradapter(listing, ImageLoader.getInstance());
+                        Recycleradapter recyclerAdapter = new Recycleradapter(listing, ImageLoader.getInstance(), mContext);
                         RecyclerView.LayoutManager recycle = new GridLayoutManager(Dashboard.this, 2);
                         recyclerView.addItemDecoration(new GridSpacingdecoration(2, dpToPx(10), true));
                         recyclerView.setLayoutManager(recycle);

@@ -17,8 +17,8 @@
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="182dp"
+        android:layout_height="187dp"
         android:padding="16dp"
         android:orientation="vertical"
         android:gravity="center">
