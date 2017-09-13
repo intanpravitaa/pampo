@@ -40,7 +40,7 @@ public class Recycleradapter extends RecyclerView.Adapter<Recycleradapter.MyHold
     public void onBindViewHolder(MyHolder holder, int position) {
         Review review = list.get(position);
         holder.name.setText(review.getJudul_review());
-        String image1 = "http://192.168.1.10/Pampo/gambar_review/"+review.getGambar_review();
+        String image1 = "http://192.168.1.13/Pampo/gambar_review/"+review.getGambar_review();
         imageLoader.displayImage(image1, holder.image);
     }
 
@@ -69,11 +69,15 @@ public class Recycleradapter extends RecyclerView.Adapter<Recycleradapter.MyHold
 
         @Override
         public void onClick(View view) {
+            //ImageView detail_gambar = (ImageView) itemView.findViewById(R.id.detail_gambar);
             int position = getAdapterPosition();
             Review reviewsarapan = this.list.get(position);
+
             Intent intent = new Intent(ctx, ReviewDetails.class);
             intent.putExtra("detail_id", reviewsarapan.getJudul_review());
-            intent.putExtra("detail_gambar", "http://192.168.43.54/Pampo/gambar_review/"+reviewsarapan.getGambar_review());
+            intent.putExtra("detail_gambar", "http://192.168.1.13/Pampo/gambar_review/"+reviewsarapan.getGambar_review());
+           // String image1 = "http://192.168.1.10/Pampo/gambar_review/"+reviewsarapan.getGambar_review();
+           // imageLoader.displayImage(image1, detail_gambar);
             intent.putExtra("detail_judul", reviewsarapan.getJudul_review());
             intent.putExtra("detail_deskripsi", reviewsarapan.getDeskripsi_review());
             this.ctx.startActivity(intent);

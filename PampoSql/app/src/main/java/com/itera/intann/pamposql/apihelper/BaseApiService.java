@@ -1,5 +1,7 @@
 package com.itera.intann.pamposql.apihelper;
 
+import com.itera.intann.pamposql.ListRating;
+import com.itera.intann.pamposql.Rating;
 import com.itera.intann.pamposql.model.ListReview;
 import com.itera.intann.pamposql.model.Review;
 
@@ -30,4 +32,7 @@ public interface BaseApiService {
 
     @GET("include/Getdata.php")
     Call<ListReview> getReview();
+
+    @GET("include/Getrating.php")
+    Call<ListRating> getRating();
 }

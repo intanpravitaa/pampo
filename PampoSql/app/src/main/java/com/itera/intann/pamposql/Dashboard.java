@@ -65,8 +65,6 @@ public class Dashboard extends AppCompatActivity {
                             System.out.println(deskripsi);
                             review = new Review(id, name, image, deskripsi);
                             listing.add(review);
-
-
                         }
                         Recycleradapter recyclerAdapter = new Recycleradapter(listing, ImageLoader.getInstance(), mContext);
                         RecyclerView.LayoutManager recycle = new GridLayoutManager(Dashboard.this, 2);
@@ -88,31 +86,8 @@ public class Dashboard extends AppCompatActivity {
             }
 
         });
-
-          /*call.enqueue(new Callback<List<Review>>() {
-              @Override
-              public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
-                  if(response!=null && response.isSuccessful()){
-                      List<Review> list = response.body();
-                        if (list != null && response.isSuccessful()){
-                            Review review = null;
-                            for (int i = 0; i < list.size(); i++) {
-                                int id = list.get(i).getId_review();
-                                String name = list.get(i).getJudul_review();
-                                String image = list.get(i).getGambar_review();
-                                String deskripsi = list.get(i).getDeskripsi_review();
-                                review = new Review(id, name, image, deskripsi);
-                                //review.setJudul_review(name);
-                                //review.setGambar_review(image);
-                                listing.add(review);
-                            }} else
-                                if (response.body() == null){
-                                Toast.makeText (Dashboard.this,"List null", Toast.LENGTH_SHORT).show();
-                            }
-
-                  }*/
-
     }
+
     public class GridSpacingdecoration extends RecyclerView.ItemDecoration {
 
         private int span;
