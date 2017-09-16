@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.itera.intann.pamposql.ReviewDetails">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
         <ImageView
             android:layout_width= "500dp"
             android:layout_height= "200dp"
@@ -26,15 +28,15 @@
             android:gravity="center"
             android:textStyle="bold"
             android:text="Judul"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detail_gambar" />
     
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="130dp"
             android:id="@+id/detail_deskripsi"
             android:text="deskripsinya adafnndglrnkrsnkankrh"
-            android:layout_below="@+id/detail_gambar"
+            android:layout_below="@+id/detail_judul"
             android:layout_alignParentStart="true"
             android:layout_marginTop="57dp"
             android:layout_alignParentEnd="true" />
@@ -47,8 +49,7 @@
             android:background="#263238"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="CEK REKOMENDASI"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="17dp"
-            android:layout_alignParentStart="true"/>
-
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detail_deskripsi"/>
 </RelativeLayout>
+</ScrollView>

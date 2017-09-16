@@ -58,7 +58,6 @@ public class Rekomendasi extends AppCompatActivity {
         predictTable = new HashMap<String, Float>();
         predictResult = new HashMap<Integer,Integer>();
 
-
         BaseApiService service = UtilsApi.getAPIService();
         Call<ListRating> call = service.getRating();
         call.enqueue(new Callback<ListRating>() {
@@ -217,7 +216,7 @@ public class Rekomendasi extends AppCompatActivity {
 
     public void createRatingTable(){
         ratingTable = new HashMap<Integer, RatingTable>();
-        for(int i = 1;i<=30;i++){
+        for(int i = 0;i<60;i++){
             RatingTable tbl = new RatingTable(i,0,0,0,0,0,0);
             ratingTable.put(i, tbl);
         }
@@ -547,83 +546,126 @@ public class Rekomendasi extends AppCompatActivity {
             float result3 = 0;
             float result4 = 0;
             float result5 = 0;
-            if(iter.getValue().getItem1() == 1){
+            if(iter.getValue().getItem1() == 0 ){
                 float a = iter.getValue().getItem2();
                 float b = iter.getValue().getItem3();
                 float c = iter.getValue().getItem4();
                 float d = iter.getValue().getItem5();
                 result1 += (a * simResult.get("m1m2")) + (b * simResult.get("m1m3")) + (c * simResult.get("m1m4")) + (d * simResult.get("m1m5"));
                 result1 /= (Math.abs(simResult.get("m1m2") + simResult.get("m1m3") + simResult.get("m1m4") + simResult.get("m1m5")));
-                String user = "u"+iter.getValue().getUser_id()+"m1";
-                predictTable.put(user,result1);
+                if(iter.getValue().getUser_id() < 10){
+                    String user = "u0"+iter.getValue().getUser_id()+"m1";
+                    predictTable.put(user,result1);
+                }else{
+                    String user = "u"+iter.getValue().getUser_id()+"m1";
+                    predictTable.put(user,result1);
+                }
             }
-            if(iter.getValue().getItem2() == 2){
+            if(iter.getValue().getItem2() == 0){
                 float a = iter.getValue().getItem1();
                 float b = iter.getValue().getItem3();
                 float c = iter.getValue().getItem4();
                 float d = iter.getValue().getItem5();
                 result2 += (a * simResult.get("m1m2")) + (b * simResult.get("m2m3")) + (c * simResult.get("m2m4")) + (d * simResult.get("m2m5"));
                 result2 /= (Math.abs(simResult.get("m1m2") + simResult.get("m2m3") + simResult.get("m2m4") + simResult.get("m2m5")));
-                String user = "u"+iter.getValue().getUser_id()+"m2";
-                predictTable.put(user,result2);
+                if(iter.getValue().getUser_id() < 10){
+                    String user = "u0"+iter.getValue().getUser_id()+"m2";
+                    predictTable.put(user,result2);
+                }else{
+                    String user = "u"+iter.getValue().getUser_id()+"m2";
+                    predictTable.put(user,result2);
+                }
             }
-            if(iter.getValue().getItem3() == 3){
+            if(iter.getValue().getItem3() == 0){
                 float a = iter.getValue().getItem1();
                 float b = iter.getValue().getItem2();
                 float c = iter.getValue().getItem4();
                 float d = iter.getValue().getItem5();
                 result3 += (a * simResult.get("m1m3")) + (b * simResult.get("m2m3")) + (c * simResult.get("m3m4")) + (d * simResult.get("m3m5"));
                 result3 /= (Math.abs(simResult.get("m1m3") + simResult.get("m2m3") + simResult.get("m3m4") + simResult.get("m3m5")));
-                String user = "u"+iter.getValue().getUser_id()+"m3";
-                predictTable.put(user,result3);
+                if(iter.getValue().getUser_id() < 10){
+                    String user = "u0"+iter.getValue().getUser_id()+"m3";
+                    predictTable.put(user,result3);
+                }else{
+                    String user = "u"+iter.getValue().getUser_id()+"m3";
+                    predictTable.put(user,result3);
+                }
             }
-            if(iter.getValue().getItem4() == 4){
+            if(iter.getValue().getItem4() == 0){
                 float a = iter.getValue().getItem1();
                 float b = iter.getValue().getItem2();
                 float c = iter.getValue().getItem3();
                 float d = iter.getValue().getItem5();
                 result4 += (a * simResult.get("m1m4")) + (b * simResult.get("m2m4")) + (c * simResult.get("m3m4")) + (d * simResult.get("m4m5"));
                 result4 /= (Math.abs(simResult.get("m1m4") + simResult.get("m2m4") + simResult.get("m3m4") + simResult.get("m4m5")));
-                String user = "u"+iter.getValue().getUser_id()+"m4";
-                predictTable.put(user,result4);
+                if(iter.getValue().getUser_id() < 10){
+                    String user = "u0"+iter.getValue().getUser_id()+"m4";
+                    predictTable.put(user,result4);
+                }else{
+                    String user = "u"+iter.getValue().getUser_id()+"m4";
+                    predictTable.put(user,result4);
+                }
             }
-            if(iter.getValue().getItem5() == 5){
+            if(iter.getValue().getItem5() == 0){
                 float a = iter.getValue().getItem1();
                 float b = iter.getValue().getItem2();
                 float c = iter.getValue().getItem3();
                 float d = iter.getValue().getItem4();
                 result5 += (a * simResult.get("m1m5")) + (b * simResult.get("m2m5")) + (c * simResult.get("m3m5")) + (d * simResult.get("m4m5"));
                 result5 /= (Math.abs(simResult.get("m1m5") + simResult.get("m2m5") + simResult.get("m3m5") + simResult.get("m4m5")));
-                String user = "u"+iter.getValue().getUser_id()+"m4";
-                predictTable.put(user,result5);
+                if(iter.getValue().getUser_id() < 10){
+                    String user = "u0"+iter.getValue().getUser_id()+"m5";
+                    predictTable.put(user,result5);
+                }else{
+                    String user = "u"+iter.getValue().getUser_id()+"m5";
+                    predictTable.put(user,result5);
+                }
             }
 
-            if((result1 > result2) && (result1 > result3) && (result1 > result4) && (result1 > result5)){
+            /*if(((result1 > result2) && (result1 > result3) && (result1 > result4) && (result1 > result5)) && (result1 > 0) && (result1 <1)){
                 predictResult.put(iter.getValue().getUser_id(),1);
             }
-            else if((result2 > result1) && (result2 > result3) && (result2 > result4) && (result2 > result5)){
+            else if(((result2 > result1) && (result2 > result3) && (result2 > result4) && (result2 > result5)) && (result2 > 0) && (result2 <1)){
                 predictResult.put(iter.getValue().getUser_id(),2);
             }
-            else if((result3 > result1) && (result3 > result2) && (result3 > result4) && (result3 > result5)){
+            else if(((result3 > result1) && (result3 > result2) && (result3 > result4) && (result3 > result5))&& (result3 > 0) && (result3 <1)){
                 predictResult.put(iter.getValue().getUser_id(),3);
             }
-            else if((result4 > result1) && (result4 > result2) && (result4 > result3) && (result4 > result5)){
+            else if(((result4 > result1) && (result4 > result2) && (result4 > result3) && (result4 > result5)) && (result4 > 0) && (result4 <1)){
                 predictResult.put(iter.getValue().getUser_id(),4);
             }
-            else if((result5 > result1) && (result5 > result2) && (result5 > result3) && (result5 > result4)){
+            else if(((result5 > result1) && (result5 > result2) && (result5 > result3) && (result5 > result4))&& (result5 > 0) && (result5 <1)){
                 predictResult.put(iter.getValue().getUser_id(),5);
-            }
+            }*/
         }
-        System.out.println("======Predict Table======");
-        for(Map.Entry<String,Float> iter : predictTable.entrySet()) {
-            System.out.println(iter.getKey()+" : "+iter.getValue());
+        Map<Integer,Float> tempTable = new HashMap<Integer, Float>();
+
+        for (int i=0;i<60;i++){
+            tempTable.put(i,(float) 0);
+            predictResult.put(i,0);
         }
 
+        System.out.println("======Predict Table======");
         for(Map.Entry<String,Float> iter : predictTable.entrySet()) {
-            if((iter.getValue() >= 0) && (iter.getValue()<=1)) {
-                System.out.println("User " + iter.getKey());
+
+            int user = Integer.parseInt(iter.getKey().substring(1,3));
+            int item = Integer.parseInt(iter.getKey().substring(4));
+            System.out.println( iter.getKey()+" : "+iter.getValue());
+            System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
+
+            if((iter.getValue() > tempTable.get(user)) && (iter.getValue() <= 1) &&(iter.getValue() >0 )){
+                tempTable.put(user,iter.getValue());
+                predictResult.put(user,item);
             }
         }
+        System.out.println("======Final Recomendation======");
+        for(Map.Entry<Integer,Integer> iter : predictResult.entrySet()) {
+            System.out.println("User : "+iter.getKey()+", 1st item Recomendation: "+iter.getValue());
+        }
+
+        /*for(Map.Entry<Integer,Integer> iter : predictResult.entrySet()) {
+            System.out.println("User " + iter.getKey() + ", Rekomendasi item : "+ iter.getValue());
+        }*/
 
     }
 }
