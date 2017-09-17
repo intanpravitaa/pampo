@@ -2,10 +2,6 @@ package com.itera.intann.pamposql;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by intann on 9/13/2017.
- */
-
 public class Rating {
     @SerializedName("rating_id")
     private int rating_id;

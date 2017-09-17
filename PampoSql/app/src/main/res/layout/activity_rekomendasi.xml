@@ -9,11 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.itera.intann.pamposql.Rekomendasi">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/RecyclerRekomendasi"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:id="@+id/rekomendasi"
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:text="Rekomendasi untuk anda adalah : "
+            android:textStyle="bold"
+            android:textSize="30dp"/>
+
 
 </RelativeLayout>
 

@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context="com.itera.intann.pamposql.ReviewDetails">
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         <ImageView
             android:layout_width= "500dp"
             android:layout_height= "200dp"
@@ -41,15 +42,27 @@
             android:layout_marginTop="57dp"
             android:layout_alignParentEnd="true" />
 
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@+id/detail_judul"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/ratingbar_rekomendasi"
+            android:numStars="5"/>
+
         <Button
             android:id="@+id/btnRekomendasi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
             android:textStyle="bold"
             android:background="#263238"
+            android:onClick="rateSubmit"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:text="CEK REKOMENDASI"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detail_deskripsi"/>
+            android:text="SUBMIT"
+
+            android:gravity="center"
+            android:layout_below="@+id/detail_deskripsi"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp" />
 </RelativeLayout>
 </ScrollView>

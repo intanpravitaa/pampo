@@ -4,10 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by intann on 9/13/2017.
- */
-
 public class RatingTable {
     @SerializedName("user_id")
     private int user_id;

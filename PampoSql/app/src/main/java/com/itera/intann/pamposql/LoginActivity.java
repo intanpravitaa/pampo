@@ -89,6 +89,8 @@ public class LoginActivity extends AppCompatActivity{
                                     // akan diparsing ke activity selanjutnya.
                                     Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_SHORT).show();
                                     String nama = jsonRESULTS.getJSONObject("user").getString("nama");
+                                    String email = jsonRESULTS.getJSONObject("user").getString("email");
+                                    Global.getInstance().userEmail = email;
                                     Intent intent = new Intent(mContext, Dashboard.class);
                                     intent.putExtra("result_nama", nama);
                                     startActivity(intent);
@@ -114,4 +116,5 @@ public class LoginActivity extends AppCompatActivity{
                     }
                 });
     }
+
 }

@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.itera.intann.pamposql.apihelper.BaseApiService;
 import com.itera.intann.pamposql.apihelper.UtilsApi;
+import com.itera.intann.pamposql.model.ListUser;
+import com.itera.intann.pamposql.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,8 @@ import retrofit2.Response;
 
 public class Rekomendasi extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+    //RecyclerView recyclerView;
+    int totalUser;
     List<RatingTable> m1m2;
     List<RatingTable> m1m3;
     List<RatingTable> m1m4;
@@ -42,7 +45,7 @@ public class Rekomendasi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rekomendasi);
 
-        recyclerView = (RecyclerView) findViewById(R.id.RecyclerRekomendasi);
+        //recyclerView = (RecyclerView) findViewById(R.id.RecyclerRekomendasi);
         allReview = new ArrayList<>();
         m1m2 = new ArrayList<>();
         m1m3 = new ArrayList<>();
@@ -59,6 +62,26 @@ public class Rekomendasi extends AppCompatActivity {
         predictResult = new HashMap<Integer,Integer>();
 
         BaseApiService service = UtilsApi.getAPIService();
+
+        Call<ListUser> callUser = service.getUser();
+        callUser.enqueue(new Callback<ListUser>() {
+            @Override
+            public void onResponse(Call<ListUser> call, Response<ListUser> response) {
+                try {
+                    List<User> list = response.body().getUser();
+                    totalUser = list.size();
+                } catch (Exception e) {
+                    Toast.makeText(Rekomendasi.this, "Error Rekomendasi!!!", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListUser> call, Throwable t) {
+                Toast.makeText(Rekomendasi.this, "Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         Call<ListRating> call = service.getRating();
         call.enqueue(new Callback<ListRating>() {
             @Override
@@ -100,6 +123,8 @@ public class Rekomendasi extends AppCompatActivity {
                 Toast.makeText(Rekomendasi.this, "Tidak berhasil", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     public List<RatingTable> getM1m2(){
@@ -216,7 +241,7 @@ public class Rekomendasi extends AppCompatActivity {
 
     public void createRatingTable(){
         ratingTable = new HashMap<Integer, RatingTable>();
-        for(int i = 0;i<60;i++){
+        for(int i = 0;i<totalUser;i++){
             RatingTable tbl = new RatingTable(i,0,0,0,0,0,0);
             ratingTable.put(i, tbl);
         }
@@ -257,16 +282,6 @@ public class Rekomendasi extends AppCompatActivity {
         //Similarity();
     }
 
-    /*public void createRatingTable2(){
-        for(Rating r: this.allReview){
-            int usr = r.setUser_id();
-            for(Rating u: this.allReview){
-                if(usr==u.getUser_id()){
-
-                }
-            }
-        }
-    }*/
 
     public void Similarity () {
         for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()){
@@ -622,25 +637,10 @@ public class Rekomendasi extends AppCompatActivity {
                 }
             }
 
-            /*if(((result1 > result2) && (result1 > result3) && (result1 > result4) && (result1 > result5)) && (result1 > 0) && (result1 <1)){
-                predictResult.put(iter.getValue().getUser_id(),1);
-            }
-            else if(((result2 > result1) && (result2 > result3) && (result2 > result4) && (result2 > result5)) && (result2 > 0) && (result2 <1)){
-                predictResult.put(iter.getValue().getUser_id(),2);
-            }
-            else if(((result3 > result1) && (result3 > result2) && (result3 > result4) && (result3 > result5))&& (result3 > 0) && (result3 <1)){
-                predictResult.put(iter.getValue().getUser_id(),3);
-            }
-            else if(((result4 > result1) && (result4 > result2) && (result4 > result3) && (result4 > result5)) && (result4 > 0) && (result4 <1)){
-                predictResult.put(iter.getValue().getUser_id(),4);
-            }
-            else if(((result5 > result1) && (result5 > result2) && (result5 > result3) && (result5 > result4))&& (result5 > 0) && (result5 <1)){
-                predictResult.put(iter.getValue().getUser_id(),5);
-            }*/
         }
         Map<Integer,Float> tempTable = new HashMap<Integer, Float>();
 
-        for (int i=0;i<60;i++){
+        for (int i=0;i<totalUser;i++){
             tempTable.put(i,(float) 0);
             predictResult.put(i,0);
         }
@@ -653,7 +653,7 @@ public class Rekomendasi extends AppCompatActivity {
             System.out.println( iter.getKey()+" : "+iter.getValue());
             System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
 
-            if((iter.getValue() > tempTable.get(user)) && (iter.getValue() <= 1) &&(iter.getValue() >0 )){
+            if((iter.getValue() > tempTable.get(user))/* && (iter.getValue() <= 1) &&(iter.getValue() >0 )*/){
                 tempTable.put(user,iter.getValue());
                 predictResult.put(user,item);
             }

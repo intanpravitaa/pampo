@@ -120,6 +120,24 @@ class DB_Function {
  
         return $hash;
     }
+
+    public function simpanRating($userEmail,$itemId,$ratingValue){
+    
+        $result = $this->conn->query("SELECT * FROM tbl_user WHERE email = '$userEmail'");  
+
+        if($result){
+            while($row = $result->fetch_assoc()){
+                $userId = $row['id'];
+            }
+
+            $resultUpdate = $this->conn->query("UPDATE tbl_rating SET rating = '$ratingValue' WHERE user_id = '$userId' AND item_id = '$itemId'");
+            
+            return $resultUpdate;
+        }else{
+            return false;
+        }
+        
+    }
  
 }
  

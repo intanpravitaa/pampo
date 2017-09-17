@@ -5,7 +5,7 @@ $db = new DB_Function();
 // json response array
 $response = array("error" => FALSE);
  
-if (isset($_POST['email']) && isset($_POST['password'])) {
+if (!empty($_POST['email']) && !empty($_POST['password'])) {
  
     // menerima parameter POST ( email dan password )
     $email = $_POST['email'];
