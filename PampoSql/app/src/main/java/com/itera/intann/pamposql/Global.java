@@ -1,8 +1,14 @@
 package com.itera.intann.pamposql;
 
+import com.itera.intann.pamposql.model.Review;
+
+import java.util.List;
+
 public class Global {
 
     public String userEmail;
+    public List<Review> review;
+    public int userId;
 
     private static Global instance = null;
 

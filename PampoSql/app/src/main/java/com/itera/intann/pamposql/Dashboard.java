@@ -66,6 +66,7 @@ public class Dashboard extends AppCompatActivity {
                             review = new Review(id, name, image, deskripsi);
                             listing.add(review);
                         }
+                        Global.getInstance().review = listing;
                         Recycleradapter recyclerAdapter = new Recycleradapter(listing, ImageLoader.getInstance(), mContext);
                         RecyclerView.LayoutManager recycle = new GridLayoutManager(Dashboard.this, 2);
                         recyclerView.addItemDecoration(new GridSpacingdecoration(2, dpToPx(10), true));

@@ -21,6 +21,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         $response["uid"] = $user["unique_id"];
         $response["user"]["nama"] = $user["nama"];
         $response["user"]["email"] = $user["email"];
+        $response["user"]["id"] = $user["id"];
         echo json_encode($response);
     } else {
         // user tidak ditemukan password/email salah

@@ -3,11 +3,13 @@ package com.itera.intann.pamposql;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itera.intann.pamposql.apihelper.BaseApiService;
 import com.itera.intann.pamposql.apihelper.UtilsApi;
 import com.itera.intann.pamposql.model.ListUser;
+import com.itera.intann.pamposql.model.Review;
 import com.itera.intann.pamposql.model.User;
 
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ public class Rekomendasi extends AppCompatActivity {
     Map<String, Float> simResult;
     Map<String, Float> predictTable;
     Map<Integer, Integer> predictResult;
+    TextView tvResultRekomendasi;
+    TextView tvResultRekomendasi2;
+    TextView tvResultRekomendasi3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,10 @@ public class Rekomendasi extends AppCompatActivity {
         simResult = new HashMap<String,Float>();
         predictTable = new HashMap<String, Float>();
         predictResult = new HashMap<Integer,Integer>();
+
+        tvResultRekomendasi = (TextView)findViewById(R.id.rekomendasi);
+        tvResultRekomendasi2 = (TextView)findViewById(R.id.rekomendasi2);
+        tvResultRekomendasi3 = (TextView)findViewById(R.id.rekomendasi3);
 
         BaseApiService service = UtilsApi.getAPIService();
 
@@ -104,13 +113,22 @@ public class Rekomendasi extends AppCompatActivity {
                             int user_id = list.get(i).getUser_id();
                             int item_id = list.get(i).getItem_id();
                             int ratingValue = list.get(i).getRatingValue();
-                            //System.out.println("Rating ID : "+rating_id+", User ID : "+user_id+", Item ID : "+item_id+", Rating Value : "+ratingValue);
                             rating = new Rating(rating_id, user_id, item_id, ratingValue);
                             allReview.add(rating);
                         }
                         createRatingTable();
                         Similarity();
                         Prediction();
+                        List<Review> listReview = Global.getInstance().review;
+
+                        System.out.println("User id adalah : "+ predictResult.get(Global.getInstance().userId));
+                            for (int i = 0; i < listReview.size(); i++) {
+                                if (listReview.get(i).getId_review() == predictResult.get(Global.getInstance().userId)){
+                                    String judul = listReview.get(i).getJudul_review();
+                                    tvResultRekomendasi.setText(judul);
+                                }
+                            }
+
                     }
                 } catch (Exception e) {
                     Toast.makeText(Rekomendasi.this, "Error Rekomendasi!!!", Toast.LENGTH_SHORT).show();
@@ -668,5 +686,8 @@ public class Rekomendasi extends AppCompatActivity {
         }*/
 
     }
+
+
+
 }
 

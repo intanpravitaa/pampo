@@ -90,7 +90,9 @@ public class LoginActivity extends AppCompatActivity{
                                     Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_SHORT).show();
                                     String nama = jsonRESULTS.getJSONObject("user").getString("nama");
                                     String email = jsonRESULTS.getJSONObject("user").getString("email");
+                                    int id = jsonRESULTS.getJSONObject("user").getInt("id");
                                     Global.getInstance().userEmail = email;
+                                    Global.getInstance().userId = id;
                                     Intent intent = new Intent(mContext, Dashboard.class);
                                     intent.putExtra("result_nama", nama);
                                     startActivity(intent);
