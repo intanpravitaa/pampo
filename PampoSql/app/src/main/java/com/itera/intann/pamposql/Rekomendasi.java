@@ -26,7 +26,7 @@ public class Rekomendasi extends AppCompatActivity {
 
     //RecyclerView recyclerView;
     int totalUser;
-    List<RatingTable> m1m2;
+    /*List<RatingTable> m1m2;
     List<RatingTable> m1m3;
     List<RatingTable> m1m4;
     List<RatingTable> m1m5;
@@ -35,15 +35,14 @@ public class Rekomendasi extends AppCompatActivity {
     List<RatingTable> m2m5;
     List<RatingTable> m3m4;
     List<RatingTable> m3m5;
-    List<RatingTable> m4m5;
+    List<RatingTable> m4m5;*/
+    Map <String,List<RatingTable>> simTable;
     Map<Integer,RatingTable> ratingTable;
     List<Rating> allReview;
     Map<String, Float> simResult;
     Map<String, Float> predictTable;
     Map<Integer, Integer> predictResult;
     TextView tvResultRekomendasi;
-    TextView tvResultRekomendasi2;
-    TextView tvResultRekomendasi3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,7 @@ public class Rekomendasi extends AppCompatActivity {
 
         //recyclerView = (RecyclerView) findViewById(R.id.RecyclerRekomendasi);
         allReview = new ArrayList<>();
+        /*
         m1m2 = new ArrayList<>();
         m1m3 = new ArrayList<>();
         m1m4 = new ArrayList<>();
@@ -61,14 +61,13 @@ public class Rekomendasi extends AppCompatActivity {
         m2m5 = new ArrayList<>();
         m3m4 = new ArrayList<>();
         m3m5 = new ArrayList<>();
-        m4m5 = new ArrayList<>();
+        m4m5 = new ArrayList<>();*/
+        simTable = new HashMap<String,List<RatingTable>>();
         simResult = new HashMap<String,Float>();
         predictTable = new HashMap<String, Float>();
         predictResult = new HashMap<Integer,Integer>();
 
         tvResultRekomendasi = (TextView)findViewById(R.id.rekomendasi);
-        tvResultRekomendasi2 = (TextView)findViewById(R.id.rekomendasi2);
-        tvResultRekomendasi3 = (TextView)findViewById(R.id.rekomendasi3);
 
         BaseApiService service = UtilsApi.getAPIService();
 
@@ -119,15 +118,16 @@ public class Rekomendasi extends AppCompatActivity {
                         createRatingTable();
                         Similarity();
                         Prediction();
-                        List<Review> listReview = Global.getInstance().review;
+
+                        /*List<Review> listReview = Global.getInstance().review;
 
                         System.out.println("User id adalah : "+ predictResult.get(Global.getInstance().userId));
-                            for (int i = 0; i < listReview.size(); i++) {
-                                if (listReview.get(i).getId_review() == predictResult.get(Global.getInstance().userId)){
-                                    String judul = listReview.get(i).getJudul_review();
-                                    tvResultRekomendasi.setText(judul);
-                                }
+                        for (int i = 0; i < listReview.size(); i++) {
+                            if (listReview.get(i).getId_review() == predictResult.get(Global.getInstance().userId)){
+                                String judul = listReview.get(i).getJudul_review();
+                                tvResultRekomendasi.setText(judul);
                             }
+                        }*/
 
                     }
                 } catch (Exception e) {
@@ -141,440 +141,194 @@ public class Rekomendasi extends AppCompatActivity {
                 Toast.makeText(Rekomendasi.this, "Tidak berhasil", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-    }
-
-    public List<RatingTable> getM1m2(){
-        return m1m2;
-    }
-
-    public void setM1m2(List<RatingTable> m1m2) {
-        this.m1m2 = m1m2;
-    }
-
-    public List<RatingTable> getM1m3() {
-        return m1m3;
-    }
-
-    public void setM1m3(List<RatingTable> m1m3) {
-        this.m1m3 = m1m3;
-    }
-
-    public List<RatingTable> getM1m4() {
-        return m1m4;
-    }
-
-    public void setM1m4(List<RatingTable> m1m4) {
-        this.m1m4 = m1m4;
-    }
-
-    public List<RatingTable> getM1m5() {
-        return m1m5;
-    }
-
-    public void setM1m5(List<RatingTable> m1m5) {
-        this.m1m5 = m1m5;
-    }
-
-    public List<RatingTable> getM2m3() {
-        return m2m3;
-    }
-
-    public void setM2m3(List<RatingTable> m2m3) {
-        this.m2m3 = m2m3;
-    }
-
-    public List<RatingTable> getM2m4() {
-        return m2m4;
-    }
-
-    public void setM2m4(List<RatingTable> m2m4) {
-        this.m2m4 = m2m4;
-    }
-
-    public List<RatingTable> getM2m5() {
-        return m2m5;
-    }
-
-    public void setM2m5(List<RatingTable> m2m5) {
-        this.m2m5 = m2m5;
-    }
-
-    public List<RatingTable> getM3m4() {
-        return m3m4;
-    }
-
-    public void setM3m4(List<RatingTable> m3m4) {
-        this.m3m4 = m3m4;
-    }
-
-    public List<RatingTable> getM3m5() {
-        return m3m5;
-    }
-
-    public void setM3m5(List<RatingTable> m3m5) {
-        this.m3m5 = m3m5;
-    }
-
-    public List<RatingTable> getM4m5() {
-        return m4m5;
-    }
-
-    public void setM4m5(List<RatingTable> m4m5) {
-        this.m4m5 = m4m5;
-    }
-
-    public List<Rating> getAllReview() {
-        return allReview;
-    }
-
-    public void setAllReview(List<Rating> allReview) {
-        this.allReview = allReview;
-    }
-
-    public Map<String, Float> getSimResult() {
-        return simResult;
-    }
-
-    public void setSimResult(Map<String, Float> simResult) {
-        this.simResult = simResult;
-    }
-
-    public Map<Integer, Integer> getPredictResult() {
-        return predictResult;
-    }
-
-    public void setPredictResult(Map<Integer, Integer> predictResult) {
-        this.predictResult = predictResult;
-    }
-
-    public Map<Integer, RatingTable> getRatingTable() {
-        return ratingTable;
-    }
-
-    public void setRatingTable(Map<Integer, RatingTable> ratingTable) {
-        this.ratingTable = ratingTable;
     }
 
     public void createRatingTable(){
         ratingTable = new HashMap<Integer, RatingTable>();
         for(int i = 0;i<totalUser;i++){
-            RatingTable tbl = new RatingTable(i,0,0,0,0,0,0);
+            List<Integer> item = new ArrayList<Integer>();
+            for(int j = 0; j<Global.getInstance().review.size();j++){
+                //inisialisasi rating table dengan 0
+                item.add(0);
+            }
+            //RatingTable tbl = new RatingTable(i,0,0,0,0,0,0);
+            RatingTable tbl = new RatingTable(i,item);
             ratingTable.put(i, tbl);
         }
 
-       for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()){
-            //System.out.println(iter.getUser_id()+"-"+iter.getItem1()+"-"+iter.getItem2()+"-"+iter.getItem3()+"-"+iter.getItem4()+"-"+iter.getItem5());
-           List<Rating> list = allReview;
-           for (int i = 0; i < list.size(); i++) {
-               int rating_id = list.get(i).getRating_id();
-               int user_id = list.get(i).getUser_id();
-               int item_id = list.get(i).getItem_id();
-               int ratingValue = list.get(i).getRatingValue();
-
-               if(user_id == iter.getValue().getUser_id()){
-                   if(item_id == 1){
-                       iter.getValue().setItem1(ratingValue);
-                   }else if(item_id == 2){
-                       iter.getValue().setItem2(ratingValue);
-                   }else if(item_id == 3){
-                       iter.getValue().setItem3(ratingValue);
-                   }else if(item_id == 4){
-                       iter.getValue().setItem4(ratingValue);
-                   }else if(item_id == 5){
-                       iter.getValue().setItem5(ratingValue);
-                   }
-               }
-           }
-           //System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5());
-       }
-
         for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()){
-            float avg = iter.getValue().getItem1() + iter.getValue().getItem2() + iter.getValue().getItem3() + iter.getValue().getItem4() + iter.getValue().getItem5();
-            avg /= 5;
-            iter.getValue().setAvg(avg);
-            System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5()+"-"+iter.getValue().getAvg());
+            List<Rating> list = allReview;
+            for (int i = 0; i < list.size(); i++) {
+                int rating_id = list.get(i).getRating_id();
+                int user_id = list.get(i).getUser_id();
+                int item_id = list.get(i).getItem_id();
+                int ratingValue = list.get(i).getRatingValue();
+
+                if(user_id == iter.getValue().getUser_id()){
+                    for(int j = 0;j<iter.getValue().getItem().size();j++) {
+                        if(j==item_id){
+                            iter.getValue().getItem().set(j,ratingValue);
+                        }
+                    }
+                }
+            }
+            //System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5());
         }
 
-        //Similarity();
+        for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
+            //float avg = iter.getValue().getItem1() + iter.getValue().getItem2() + iter.getValue().getItem3() + iter.getValue().getItem4() + iter.getValue().getItem5();
+            float avg = 0;
+            for (int i = 0; i < iter.getValue().getItem().size(); i++) {
+                avg += iter.getValue().getItem().get(i);
+            }
+
+            avg /= iter.getValue().getItem().size();
+            iter.getValue().setAvg(avg);
+            //System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5()+"-"+iter.getValue().getAvg());
+            System.out.print(iter.getValue().getUser_id()+"-");
+            for (int i = 0; i < iter.getValue().getItem().size(); i++) {
+                System.out.print("-"+iter.getValue().getItem().get(i));
+            }
+            System.out.println("-"+iter.getValue().getAvg());
+        }
+
     }
 
-
     public void Similarity () {
-        for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()){
-            if((iter.getValue().getItem1() != 0)&& (iter.getValue().getItem2() !=0)){
-                m1m2.add(iter.getValue());
-            }
-            if((iter.getValue().getItem1() != 0)&& (iter.getValue().getItem3() !=0)){
-                m1m3.add(iter.getValue());
-            }
-            if((iter.getValue().getItem1() != 0)&& (iter.getValue().getItem4() !=0)){
-                m1m4.add(iter.getValue());
-            }
-            if((iter.getValue().getItem1() != 0)&& (iter.getValue().getItem5() !=0)){
-                m1m5.add(iter.getValue());
-            }
-            if((iter.getValue().getItem2() != 0)&& (iter.getValue().getItem3() !=0)){
-                m2m3.add(iter.getValue());
-            }
-            if((iter.getValue().getItem2() != 0)&& (iter.getValue().getItem4() !=0)){
-                m2m4.add(iter.getValue());
-            }
-            if((iter.getValue().getItem2() != 0)&& (iter.getValue().getItem5() !=0)){
-                m2m5.add(iter.getValue());
-            }
-            if((iter.getValue().getItem3() != 0)&& (iter.getValue().getItem4() !=0)){
-                m3m4.add(iter.getValue());
-            }
-            if((iter.getValue().getItem3() != 0)&& (iter.getValue().getItem5() !=0)){
-                m3m5.add(iter.getValue());
-            }
-            if((iter.getValue().getItem4() != 0)&& (iter.getValue().getItem5() !=0)){
-                m4m5.add(iter.getValue());
+        List<RatingTable> tempTable = new ArrayList<RatingTable>();
+
+        for(int i = 0;i < (ratingTable.get(1).getItem().size()-1);i++){
+            for(int j = i+1;j < ratingTable.get(1).getItem().size();j++){
+                String tblName = "m" + i + "m" + j;
+                List<RatingTable> list = new ArrayList<RatingTable>();
+                for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
+                    if ((iter.getValue().getItem().get(i) != 0) && (iter.getValue().getItem().get(j) != 0)) {
+                        list.add(iter.getValue());
+                    }
+                }
+                simTable.put(tblName,list);
             }
         }
 
-        List<RatingTable> list = m1m2;
-        List<RatingTable> list2 = m1m3;
-        List<RatingTable> list3 = m1m4;
-        List<RatingTable> list4 = m1m5;
-        List<RatingTable> list5 = m2m3;
-        List<RatingTable> list6 = m2m4;
-        List<RatingTable> list7 = m2m5;
-        List<RatingTable> list8 = m3m4;
-        List<RatingTable> list9 = m3m5;
-        List<RatingTable> list10 = m4m5;
-        float result = 0;
-        float resultPembilang = 0;
-        float resultPenyebut1 = 0;
-        float resultPenyebut2 = 0;
-        float resultPenyebut = 0;
 
-        System.out.println("==========M1M2==========");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("Id user : "+list.get(i).getUser_id()+", M1 : "+list.get(i).getItem1()+", M2 : "+list.get(i).getItem2());
-            float a = list.get(i).getItem1()-list.get(i).getAvg();
-            float b = list.get(i).getItem2()-list.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
+        /*for check Similarity table
+        for(Map.Entry<String,List<RatingTable>> iter : simTable.entrySet()){
+            System.out.println("========="+iter.getKey()+"=========");
+            for(int i = 0;i < iter.getValue().size();i++){
+                System.out.print(iter.getValue().get(i).getUser_id());
+                for(int j = 0;j < iter.getValue().get(i).getItem().size();j++){
+                    System.out.print("-"+iter.getValue().get(i).getItem().get(j));
+                }
+                System.out.println("-"+iter.getValue().get(i).getAvg());
+            }
+            System.out.println();
+        }*/
 
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m1m2",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M1M2 : "+simResult.get("m1m2"));
 
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M1M3==========");
-        for (int i = 0; i < list2.size(); i++) {
-            System.out.println("Id user : "+list2.get(i).getUser_id()+", M1 : "+list2.get(i).getItem1()+", M3 : "+list2.get(i).getItem3());
-            float a = list2.get(i).getItem1()-list2.get(i).getAvg();
-            float b = list2.get(i).getItem3()-list2.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m1m3",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M1M3 : "+simResult.get("m1m3"));
 
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M1M4==========");
-        for (int i = 0; i < list3.size(); i++) {
-            System.out.println("Id user : "+list3.get(i).getUser_id()+", M1 : "+list3.get(i).getItem1()+", M4 : "+list3.get(i).getItem4());
-            float a = list3.get(i).getItem1()-list3.get(i).getAvg();
-            float b = list3.get(i).getItem4()-list3.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m1m4",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M1M4 : "+simResult.get("m1m4"));
+        for(Map.Entry<String,List<RatingTable>> iter : simTable.entrySet()) {
+            Float result;
+            float resultPembilang = 0;
+            float resultPenyebut1 = 0;
+            float resultPenyebut2 = 0;
+            float resultPenyebut = 0;
 
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M1M5==========");
-        for (int i = 0; i < list4.size(); i++) {
-            System.out.println("Id user : "+list4.get(i).getUser_id()+", M1 : "+list4.get(i).getItem1()+", M5 : "+list4.get(i).getItem5());
-            float a = list4.get(i).getItem1()-list4.get(i).getAvg();
-            float b = list4.get(i).getItem5()-list4.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m1m5",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M1M5 : "+simResult.get("m1m5"));
+            for(int i = 0;i < iter.getValue().size();i++){
+                for(int j = 0;j < iter.getValue().get(i).getItem().size();j++){
+                    float a = iter.getValue().get(i).getItem().get(j)-iter.getValue().get(i).getAvg();
+                    float b = iter.getValue().get(i).getItem().get(j)-iter.getValue().get(i).getAvg();
+                    resultPembilang += a * b;
+                    resultPenyebut1 += Math.sqrt(a*a);
+                    resultPenyebut2 += Math.sqrt(b*b);
+                }
+            }
 
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M2M3==========");
-        for (int i = 0; i < list5.size(); i++) {
-            System.out.println("Id user : "+list5.get(i).getUser_id()+", M2 : "+list5.get(i).getItem2()+", M3 : "+list5.get(i).getItem3());
-            float a = list5.get(i).getItem2()-list5.get(i).getAvg();
-            float b = list5.get(i).getItem3()-list5.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
+            resultPenyebut = resultPenyebut1 * resultPenyebut2;
+            result = resultPembilang/resultPenyebut;
+
+            if(result.isNaN()){
+                simResult.put(iter.getKey(), (float) 0);
+            }else{
+                simResult.put(iter.getKey(),result);
+            }
+
+            //System.out.println("Result "+iter.getKey()+": "+simResult.get(iter.getKey()));
         }
 
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m2m3",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M2M3 : "+simResult.get("m2m3"));
-
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M2M4==========");
-        for (int i = 0; i < list6.size(); i++) {
-            System.out.println("Id user : "+list6.get(i).getUser_id()+", M2 : "+list6.get(i).getItem2()+", M4 : "+list6.get(i).getItem4());
-            float a = list6.get(i).getItem2()-list6.get(i).getAvg();
-            float b = list6.get(i).getItem4()-list6.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-
+        for(Map.Entry<String,Float> iter : simResult.entrySet()) {
+            System.out.println("Result "+iter.getKey()+": "+iter.getValue());
         }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m2m4",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M2M4 : "+simResult.get("m2m4"));
-
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M2M5==========");
-        for (int i = 0; i < list7.size(); i++) {
-            System.out.println("Id user : "+list7.get(i).getUser_id()+", M2 : "+list7.get(i).getItem2()+", M5 : "+list7.get(i).getItem5());
-            float a = list7.get(i).getItem2()-list7.get(i).getAvg();
-            float b = list7.get(i).getItem5()-list7.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m2m5",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M2M5 : "+simResult.get("m2m5"));
-
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M3M4==========");
-        for (int i = 0; i < list8.size(); i++) {
-            System.out.println("Id user : "+list8.get(i).getUser_id()+", M3 : "+list8.get(i).getItem3()+", M4 : "+list8.get(i).getItem4());
-            float a = list8.get(i).getItem3()-list8.get(i).getAvg();
-            float b = list8.get(i).getItem4()-list8.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m3m4",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M3M4 : "+simResult.get("m3m4"));
-
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M3M5==========");
-        for (int i = 0; i < list9.size(); i++) {
-            System.out.println("Id user : "+list9.get(i).getUser_id()+", M3 : "+list9.get(i).getItem3()+", M5 : "+list9.get(i).getItem5());
-            float a = list9.get(i).getItem3()-list9.get(i).getAvg();
-            float b = list9.get(i).getItem5()-list9.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m3m5",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M3M5 : "+simResult.get("m3m5"));
-
-        result = 0;
-        resultPembilang = 0;
-        resultPenyebut1 = 0;
-        resultPenyebut2 = 0;
-        resultPenyebut = 0;
-        System.out.println("==========M4M5==========");
-        for (int i = 0; i < list10.size(); i++) {
-            System.out.println("Id user : "+list10.get(i).getUser_id()+", M4 : "+list10.get(i).getItem4()+", M5 : "+list10.get(i).getItem5());
-            float a = list10.get(i).getItem4()-list10.get(i).getAvg();
-            float b = list10.get(i).getItem5()-list10.get(i).getAvg();
-            resultPembilang += a * b;
-            resultPenyebut1 += Math.sqrt(a*a);
-            resultPenyebut2 += Math.sqrt(b*b);
-        }
-        resultPenyebut = resultPenyebut1 * resultPenyebut2;
-        result = resultPembilang/resultPenyebut;
-        simResult.put("m4m5",result);
-        System.out.println("Result Pembilang : "+resultPembilang);
-        System.out.println("Result Penyebut 1 : "+resultPenyebut1);
-        System.out.println("Result Penyebut 2 : "+resultPenyebut2);
-        System.out.println("Result M4M5 : "+simResult.get("m4m5"));
-
     }
 
     public void Prediction(){
-        for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()){
+        for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
+            //System.out.println(iter.getValue().getItem().size());
+            for (int i = 0; i < iter.getValue().getItem().size(); i++) {
+                float resultPembilang = 0;
+                float resultPenyebut = 0;
+                Float result;
+                if (iter.getValue().getItem().get(i) == 0) {
+                    for (int j = 0; j < iter.getValue().getItem().size(); j++) {
+                        if (j != i) {
+                            String key;
+                            if(i<j){
+                                key = "m" + i + "m" + j;
+                            }else{
+                                key = "m" + j + "m" + i;
+                            }
+
+                            //System.out.println(key);
+                            resultPembilang += (iter.getValue().getItem().get(j) * simResult.get(key));
+                            resultPenyebut += Math.abs(simResult.get(key));
+                        }
+                    }
+                    System.out.println("User : "+iter.getValue().getUser_id());
+                    System.out.println("pembilang : "+resultPembilang);
+                    System.out.println("penyebut : "+resultPenyebut);
+                    result = resultPembilang / resultPenyebut;
+                    if(result.isNaN()){
+                        result = (float) 0;
+                    }
+                    //System.out.println(result);
+                    if (iter.getValue().getUser_id() < 10) {
+                        String user = "u0" + iter.getValue().getUser_id() + "m" + i;
+                        predictTable.put(user, result);
+                    } else {
+                        String user = "u" + iter.getValue().getUser_id() + "m" + i;
+                        predictTable.put(user, result);
+                    }
+                }
+            }
+        }
+
+        Map<Integer,Float> tempTable = new HashMap<Integer, Float>();
+
+        for (int i=0;i<totalUser;i++){
+            tempTable.put(i,(float) 0);
+            predictResult.put(i,0);
+        }
+
+        System.out.println("======Predict Table======");
+        for(Map.Entry<String,Float> iter : predictTable.entrySet()) {
+
+            int user = Integer.parseInt(iter.getKey().substring(1,3));
+            int item = Integer.parseInt(iter.getKey().substring(4));
+            //System.out.println( iter.getKey()+" : "+iter.getValue());
+            System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
+
+            if((iter.getValue() > tempTable.get(user))/* && (iter.getValue() <= 1) &&(iter.getValue() >0 )*/){
+                tempTable.put(user,iter.getValue());
+                predictResult.put(user,item);
+            }
+        }
+
+            System.out.println("======Final Recomendation======");
+            for(Map.Entry<Integer,Integer> iter : predictResult.entrySet()) {
+                System.out.println("User : "+iter.getKey()+", 1st item Recomendation: "+iter.getValue());
+            }
+
             //System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5()+"-"+iter.getValue().getAvg());
-            float result1 = 0;
+            /*float result1 = 0;
             float result2 = 0;
             float result3 = 0;
             float result4 = 0;
@@ -671,7 +425,7 @@ public class Rekomendasi extends AppCompatActivity {
             System.out.println( iter.getKey()+" : "+iter.getValue());
             System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
 
-            if((iter.getValue() > tempTable.get(user))/* && (iter.getValue() <= 1) &&(iter.getValue() >0 )*/){
+            if((iter.getValue() > tempTable.get(user))/* && (iter.getValue() <= 1) &&(iter.getValue() >0 )*//*){
                 tempTable.put(user,iter.getValue());
                 predictResult.put(user,item);
             }
@@ -687,6 +441,37 @@ public class Rekomendasi extends AppCompatActivity {
 
     }
 
+    public List<Rating> getAllReview() {
+        return allReview;
+    }
+
+    public void setAllReview(List<Rating> allReview) {
+        this.allReview = allReview;
+    }
+
+    public Map<String, Float> getSimResult() {
+        return simResult;
+    }
+
+    public void setSimResult(Map<String, Float> simResult) {
+        this.simResult = simResult;
+    }
+
+    public Map<Integer, Integer> getPredictResult() {
+        return predictResult;
+    }
+
+    public void setPredictResult(Map<Integer, Integer> predictResult) {
+        this.predictResult = predictResult;
+    }
+
+    public Map<Integer, RatingTable> getRatingTable() {
+        return ratingTable;
+    }
+
+    public void setRatingTable(Map<Integer, RatingTable> ratingTable) {
+        this.ratingTable = ratingTable;
+    }
 
 
 }

@@ -7,7 +7,8 @@ import java.util.List;
 public class RatingTable {
     @SerializedName("user_id")
     private int user_id;
-    @SerializedName("item1")
+    private List<Integer> item;
+    /*@SerializedName("item1")
     private int item1;
     @SerializedName("item2")
     private int item2;
@@ -17,10 +18,11 @@ public class RatingTable {
     private int item4;
     @SerializedName("item5")
     private int item5;
+    */
     @SerializedName("avg")
     private float avg;
 
-    public RatingTable(int user_id, int item1, int item2, int item3, int item4, int item5, float avg) {
+    /*public RatingTable(int user_id, int item1, int item2, int item3, int item4, int item5, float avg) {
         this.user_id = user_id;
         this.item1 = item1;
         this.item2 = item2;
@@ -28,6 +30,11 @@ public class RatingTable {
         this.item4 = item4;
         this.item5 = item5;
         this.avg = avg;
+    }*/
+
+    public RatingTable(int user_id,List<Integer> item){
+        this.user_id = user_id;
+        this.item = item;
     }
 
     public int getUser_id() {
@@ -38,7 +45,7 @@ public class RatingTable {
         this.user_id = user_id;
     }
 
-    public int getItem1() {
+    /*public int getItem1() {
         return item1;
     }
 
@@ -81,8 +88,21 @@ public class RatingTable {
     public float getAvg() {
         return avg;
     }
+    */
+
+    public List<Integer> getItem() {
+        return item;
+    }
+
+    public void setItem(List<Integer> item) {
+        this.item = item;
+    }
 
     public void setAvg(float avg) {
         this.avg = avg;
+    }
+
+    public float getAvg() {
+        return avg;
     }
 }
