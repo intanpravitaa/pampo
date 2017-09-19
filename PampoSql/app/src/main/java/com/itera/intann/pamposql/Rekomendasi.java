@@ -119,7 +119,7 @@ public class Rekomendasi extends AppCompatActivity {
                         Similarity();
                         Prediction();
 
-                        /*List<Review> listReview = Global.getInstance().review;
+                        List<Review> listReview = Global.getInstance().review;
 
                         System.out.println("User id adalah : "+ predictResult.get(Global.getInstance().userId));
                         for (int i = 0; i < listReview.size(); i++) {
@@ -127,7 +127,7 @@ public class Rekomendasi extends AppCompatActivity {
                                 String judul = listReview.get(i).getJudul_review();
                                 tvResultRekomendasi.setText(judul);
                             }
-                        }*/
+                        }
 
                     }
                 } catch (Exception e) {
@@ -255,22 +255,27 @@ public class Rekomendasi extends AppCompatActivity {
             //System.out.println("Result "+iter.getKey()+": "+simResult.get(iter.getKey()));
         }
 
+        System.out.println("======== Similarity Table =========");
+
         for(Map.Entry<String,Float> iter : simResult.entrySet()) {
             System.out.println("Result "+iter.getKey()+": "+iter.getValue());
         }
     }
 
     public void Prediction(){
+
+        System.out.println("======== Prediction Table =========");
         for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
             //System.out.println(iter.getValue().getItem().size());
             for (int i = 0; i < iter.getValue().getItem().size(); i++) {
                 float resultPembilang = 0;
                 float resultPenyebut = 0;
                 Float result;
+                String key;
                 if (iter.getValue().getItem().get(i) == 0) {
                     for (int j = 0; j < iter.getValue().getItem().size(); j++) {
                         if (j != i) {
-                            String key;
+
                             if(i<j){
                                 key = "m" + i + "m" + j;
                             }else{
@@ -282,19 +287,31 @@ public class Rekomendasi extends AppCompatActivity {
                             resultPenyebut += Math.abs(simResult.get(key));
                         }
                     }
-                    System.out.println("User : "+iter.getValue().getUser_id());
-                    System.out.println("pembilang : "+resultPembilang);
-                    System.out.println("penyebut : "+resultPenyebut);
+                    System.out.print("User : "+iter.getValue().getUser_id());
+                    System.out.print(", Item : "+i);
+                    System.out.print(", pembilang : "+resultPembilang);
+                    System.out.print(", penyebut : "+resultPenyebut);
                     result = resultPembilang / resultPenyebut;
                     if(result.isNaN()){
                         result = (float) 0;
                     }
-                    //System.out.println(result);
+                    System.out.println(", Predict rate : "+result);
                     if (iter.getValue().getUser_id() < 10) {
-                        String user = "u0" + iter.getValue().getUser_id() + "m" + i;
+                        String user;
+                        if(i!=10){
+                            user = "u0" + iter.getValue().getUser_id() + "m0" + i;
+                        }else{
+                            user = "u0" + iter.getValue().getUser_id() + "m" + i;
+                        }
+
                         predictTable.put(user, result);
                     } else {
-                        String user = "u" + iter.getValue().getUser_id() + "m" + i;
+                        String user;
+                        if(i!=10){
+                            user = "u" + iter.getValue().getUser_id() + "m0" + i;
+                        }else{
+                            user = "u" + iter.getValue().getUser_id() + "m" + i;
+                        }
                         predictTable.put(user, result);
                     }
                 }
@@ -312,7 +329,7 @@ public class Rekomendasi extends AppCompatActivity {
         for(Map.Entry<String,Float> iter : predictTable.entrySet()) {
 
             int user = Integer.parseInt(iter.getKey().substring(1,3));
-            int item = Integer.parseInt(iter.getKey().substring(4));
+            int item = Integer.parseInt(iter.getKey().substring(4,6));
             //System.out.println( iter.getKey()+" : "+iter.getValue());
             System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
 
@@ -322,10 +339,10 @@ public class Rekomendasi extends AppCompatActivity {
             }
         }
 
-            System.out.println("======Final Recomendation======");
-            for(Map.Entry<Integer,Integer> iter : predictResult.entrySet()) {
-                System.out.println("User : "+iter.getKey()+", 1st item Recomendation: "+iter.getValue());
-            }
+        System.out.println("======Final Recomendation======");
+        for(Map.Entry<Integer,Integer> iter : predictResult.entrySet()) {
+            System.out.println("User : "+iter.getKey()+", 1st item Recomendation: "+iter.getValue());
+        }
 
             //System.out.println(iter.getValue().getUser_id()+"-"+iter.getValue().getItem1()+"-"+iter.getValue().getItem2()+"-"+iter.getValue().getItem3()+"-"+iter.getValue().getItem4()+"-"+iter.getValue().getItem5()+"-"+iter.getValue().getAvg());
             /*float result1 = 0;
