@@ -13,12 +13,15 @@ public class Review {
     private String gambar_review;
     @SerializedName("deskripsi_review")
     private String deskripsi_review;
+    @SerializedName("gambar_detail")
+    private String gambar_detail;
 
-    public Review(int id, String name, String image, String deskripsi) {
+    public Review(int id, String name, String image, String deskripsi, String detailimage) {
         this.id_review = id;
         this.judul_review = name;
         this.gambar_review = image;
         this.deskripsi_review = deskripsi;
+        this.gambar_detail = detailimage;
     }
 
     public int getId_review() {
@@ -51,5 +54,13 @@ public class Review {
 
     public void setDeskripsi_review(String deskripsi_review) {
         this.deskripsi_review = deskripsi_review;
+    }
+
+    public String getGambar_detail() {
+        return gambar_detail;
+    }
+
+    public void setGambar_detail(String gambar_detail) {
+        this.gambar_detail = gambar_detail;
     }
 }

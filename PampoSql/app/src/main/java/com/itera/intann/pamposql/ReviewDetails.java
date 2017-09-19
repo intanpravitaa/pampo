@@ -43,10 +43,9 @@ public class ReviewDetails extends AppCompatActivity {
         setContentView(R.layout.activity_review_details);
         mContext = this;
         mApiService = UtilsApi.getAPIService();
+        ImageLoaderConfiguration config=new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
         //initcomponents();
-        //ImageLoaderConfiguration config=new ImageLoaderConfiguration.Builder(this).build();
-        //ImageLoader.getInstance().init(config);
-
 
         //private void initcomponents() {
         dtImageView = (ImageView) findViewById(R.id.detail_gambar);
@@ -54,7 +53,9 @@ public class ReviewDetails extends AppCompatActivity {
         dtDeskripsi = (TextView) findViewById(R.id.detail_deskripsi);
         dtId = getIntent().getIntExtra("detail_id",00);
         userEmail = Global.getInstance().userEmail;
-        dtImageView.setImageResource(getIntent().getIntExtra("detail_gambar", 00));
+//       dtImageView.setImageResource(getIntent().getIntExtra("detail_gambar", 00));
+        ImageLoader.getInstance().displayImage(getIntent().getStringExtra("detail_gambar"),dtImageView);
+//        System.out.println(getIntent().getStringExtra("detail_gambar"));
         dtJudul.setText(getIntent().getStringExtra("detail_judul"));
         dtDeskripsi.setText(getIntent().getStringExtra("detail_deskripsi"));
         btnRating = (RatingBar) findViewById(R.id.ratingbar_rekomendasi);

@@ -60,10 +60,11 @@ public class Dashboard extends AppCompatActivity {
                             String name = list.get(i).getJudul_review();
                             String image = list.get(i).getGambar_review();
                             String deskripsi = list.get(i).getDeskripsi_review();
+                            String detailimage = list.get(i).getGambar_detail();
                             System.out.println(name);
                             System.out.println(image);
                             System.out.println(deskripsi);
-                            review = new Review(id, name, image, deskripsi);
+                            review = new Review(id, name, image, deskripsi,detailimage);
                             listing.add(review);
                         }
                         Global.getInstance().review = listing;
