@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/dataTable/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/dataTable/media/css/jquery.dataTables.min.css">
     <link rel="shortcut icon" href="<?=base_url()?>assets/pampo.jpg">    
-    <script src="<?=base_url()?>assets/dataTable/media/js/jquery.dataTables.min.js"></script>    
+    <script src="<?=base_url()?>assets/dataTable/media/js/jquery.dataTables.min.js"></script>
+
   </head>
   <body>
 <div class="container" style="background:#fff;margin-top:0px; padding-top:30px; padding-bottom:15px; border-bottom:solid thin #e8e8e8; box-shadow:         0px -6px 22px 0px rgba(0, 0, 0, 0.2); border-radius: 3px;">
@@ -66,4 +67,72 @@
     </div>
     </div>
 
+  <!-- For AJAX -->
+<script language='javascript'>
+
+  function delete_data(id) {
+    var ajaxRequest;
   
+    try {
+      ajaxRequest = new XMLHttpRequest(); //Opera 8.0+, Firefox, Safari
+    } catch(e) {
+      //Untuk IE
+      try {
+        ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch(e) {
+        try {
+          ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch(e) {
+          alert("Gagal karena browser anda tidak mendukung ajax");
+          return false;
+        }
+      }
+    }
+
+    ajaxRequest.onreadystatechange = function() {
+      if (ajaxRequest.readyState == 4) {
+        var ajaxTampil = document.getElementById('listData');
+        ajaxTampil.innerHTML = ajaxRequest.responseText;
+      }
+    }
+    
+    
+    var url="<?=base_url()?>index.php/data/delete_data?id="+id;
+    
+    ajaxRequest.open("GET",url,true);
+    ajaxRequest.send(null);
+  }
+
+  function edit_data(id) {
+    var ajaxRequest;
+  
+    try {
+      ajaxRequest = new XMLHttpRequest(); //Opera 8.0+, Firefox, Safari
+    } catch(e) {
+      //Untuk IE
+      try {
+        ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch(e) {
+        try {
+          ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch(e) {
+          alert("Gagal karena browser anda tidak mendukung ajax");
+          return false;
+        }
+      }
+    }
+
+    ajaxRequest.onreadystatechange = function() {
+      if (ajaxRequest.readyState == 4) {
+        var ajaxTampil = document.getElementById('listData');
+        ajaxTampil.innerHTML = ajaxRequest.responseText;
+      }
+    }
+    
+    
+    var url="<?=base_url()?>index.php/data/edit_data?id="+id;
+    
+    ajaxRequest.open("GET",url,true);
+    ajaxRequest.send(null);
+  }
+</script>

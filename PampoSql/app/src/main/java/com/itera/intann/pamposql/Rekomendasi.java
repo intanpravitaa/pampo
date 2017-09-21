@@ -143,10 +143,13 @@ public class Rekomendasi extends AppCompatActivity {
                 int item_id = list.get(i).getItem_id();
                 int ratingValue = list.get(i).getRatingValue();
 
+                //kalau getUserId dari allReview = di ratingtable.userid, maka masuk ke perulangan
                 if(user_id == iter.getValue().getUser_id()){
+                    
                     for(int j = 0;j<iter.getValue().getItem().size();j++) {
+                       //untuk  mengecek apakah item_id pada rating table = item_id. pada list allReview
                         if(j==item_id){
-                            iter.getValue().getItem().set(j,ratingValue);
+                            iter.getValue().getItem().set(j,ratingValue);// isi ratingTable dengan value yang ada di Allrinvew
                         }
                     }
                 }
@@ -174,18 +177,18 @@ public class Rekomendasi extends AppCompatActivity {
     }
 
     public void Similarity () {
-        List<RatingTable> tempTable = new ArrayList<RatingTable>();
+        List<RatingTable> tempTable = new ArrayList<RatingTable>(); //buat temporary table untuk menyimpan list of user yang ngerating
 
-        for(int i = 0;i < (ratingTable.get(1).getItem().size()-1);i++){
-            for(int j = i+1;j < ratingTable.get(1).getItem().size();j++){
-                String tblName = "m" + i + "m" + j;
-                List<RatingTable> list = new ArrayList<RatingTable>();
-                for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
+        for(int i = 0;i < (ratingTable.get(1).getItem().size()-1);i++){ //looping untuk ngecek user ngevote item 1, (-1) biar dia ga ngecek item yg sama
+            for(int j = i+1;j < ratingTable.get(1).getItem().size();j++){// looping untuk mngecek user ngevote item 2
+                String tblName = "m" + i + "m" + j; // buat key di tabel similarity
+                List<RatingTable> list = new ArrayList<RatingTable>(); //buat table untuk menyimpan list of user yang ngerating
+                for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) { // untuk mengambil nilai rating dari ratingtable
                     if ((iter.getValue().getItem().get(i) != 0) && (iter.getValue().getItem().get(j) != 0)) {
-                        list.add(iter.getValue());
+                        list.add(iter.getValue()); //dimasukkin ke list
                     }
                 }
-                simTable.put(tblName,list);
+                simTable.put(tblName,list); // list yg berisi user yg ngevote untuk tblName, lalu datanya disimpan di similarity table
             }
         }
 
@@ -205,14 +208,14 @@ public class Rekomendasi extends AppCompatActivity {
 
 
 
-        for(Map.Entry<String,List<RatingTable>> iter : simTable.entrySet()) {
+        for(Map.Entry<String,List<RatingTable>> iter : simTable.entrySet()) { //map of list ratingtable, isinya simtable (ngambil data)
             Float result;
             float resultPembilang = 0;
             float resultPenyebut1 = 0;
             float resultPenyebut2 = 0;
             float resultPenyebut = 0;
 
-            for(int i = 0;i < iter.getValue().size();i++){
+            for(int i = 0;i < iter.getValue().size();i++){ //ngambil data yg ada di list RatingTable
                 for(int j = 0;j < iter.getValue().get(i).getItem().size();j++){
                     float a = iter.getValue().get(i).getItem().get(j)-iter.getValue().get(i).getAvg();
                     float b = iter.getValue().get(i).getItem().get(j)-iter.getValue().get(i).getAvg();
@@ -225,7 +228,7 @@ public class Rekomendasi extends AppCompatActivity {
             resultPenyebut = resultPenyebut1 * resultPenyebut2;
             result = resultPembilang/resultPenyebut;
 
-            if(result.isNaN()){
+            if(result.isNaN()){ // Nan contoh : kalau dibagi 0, hasil infinte. infinite itu yg disebut dg nan
                 simResult.put(iter.getKey(), (float) 0);
             }else{
                 simResult.put(iter.getKey(),result);
@@ -246,14 +249,14 @@ public class Rekomendasi extends AppCompatActivity {
         System.out.println("======== Prediction Table =========");
         for(Map.Entry<Integer,RatingTable> iter : ratingTable.entrySet()) {
             //System.out.println(iter.getValue().getItem().size());
-            for (int i = 0; i < iter.getValue().getItem().size(); i++) {
+            for (int i = 0; i < iter.getValue().getItem().size(); i++) { // untuk ngecek kalau i belum dirating
                 float resultPembilang = 0;
                 float resultPenyebut = 0;
                 Float result;
                 String key;
                 if (iter.getValue().getItem().get(i) == 0) {
-                    for (int j = 0; j < iter.getValue().getItem().size(); j++) {
-                        if (j != i) {
+                    for (int j = 0; j < iter.getValue().getItem().size(); j++) { // untuk memulai hitung dari 0
+                        if (j != i) { // 1,1 tidak mungkin, 22 tidak mungkin, dst. kalau tidak gini nanti error null pointer
 
                             if(i<j){
                                 key = "m" + i + "m" + j;
@@ -297,24 +300,23 @@ public class Rekomendasi extends AppCompatActivity {
             }
         }
 
-        Map<Integer,Float> tempTable = new HashMap<Integer, Float>();
+        Map<Integer,Float> tempTable = new HashMap<Integer, Float>(); // buat tabel untuk menampung predict rate yang tinggi
 
-        for (int i=0;i<totalUser;i++){
-            tempTable.put(i,(float) 0);
-            predictResult.put(i,0);
+        for (int i=0;i<totalUser;i++){ 
+            tempTable.put(i,(float) 0); //inisialisasi tempt table dg = 0
+            predictResult.put(i,0); // inisialisasi predict result dg = 0
         }
 
         System.out.println("======Predict Table======");
-        for(Map.Entry<String,Float> iter : predictTable.entrySet()) {
+        for(Map.Entry<String,Float> iter : predictTable.entrySet()) { // ngambil data dari predict table
 
-            int user = Integer.parseInt(iter.getKey().substring(1,3));
-            int item = Integer.parseInt(iter.getKey().substring(4,6));
-            //System.out.println( iter.getKey()+" : "+iter.getValue());
+            int user = Integer.parseInt(iter.getKey().substring(1,3)); // ngambil user dari key
+            int item = Integer.parseInt(iter.getKey().substring(4,6)); // ngambil item dari key
             System.out.println("User : "+user+", item: "+item+ ", predict rate : "+iter.getValue());
 
-            if((iter.getValue() > tempTable.get(user))/* && (iter.getValue() <= 1) &&(iter.getValue() >0 )*/){
-                tempTable.put(user,iter.getValue());
-                predictResult.put(user,item);
+            if((iter.getValue() > tempTable.get(user))){ // membandingkan nilai value yg ada di temp table dg predicttabble
+                tempTable.put(user,iter.getValue()); //kalau yg di predict table lebih besar, diletakkan di tempt table 
+                predictResult.put(user,item); // predict result nyimpen item id dan user id
             }
         }
 

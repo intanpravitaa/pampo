@@ -75,5 +75,53 @@ class Data extends CI_Controller {
 		
 		$this->load->view('template/wrapper', $data);
 	}
+
+	public function delete_data(){
+		extract($_GET);
+		
+		$query_delete = $this->Model->hapus("id_review",$id,"tbl_review");
+		$data = $this->Model->list_data_all("tbl_review")->result_array();
+		$data = array(
+			'data' => $data,
+			'page' => 'ajax_delete',
+			'link' => 'ViewData'
+		);
+		
+		$this->load->view('ajax_delete', $data);
+	}
+
+	public function edit_data(){
+		extract($_GET);
+		
+		$data = $this->Model->ambil('id_review', $id, 'tbl_review');
+		$data = array(
+			'data' => $data,
+			'page' => 'ajax_edit',
+			'link' => 'ViewData'
+		);
+		
+		$this->load->view('ajax_edit', $data);
+	}
+
+	public function update(){
+		extract($_GET);
+		$alert = "<script>
+					alert('Update Success !!');
+					window.location.href='".base_url()."index.php/data';
+					</script>";
+		$data_update = array(
+			'judul_review' => $judul,
+			'deskripsi_review' => $deskripsi,
+		);
+		$this->Model->update('id_review',$id,'tbl_review',$data_update);
+
+		$data = array(
+			'alert' => $alert,
+			'page' => 'Notification',
+			'link' => 'ViewData'
+		);
+		
+		$this->load->view('template/wrapper', $data);
+	}
 	
 }
